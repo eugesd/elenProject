@@ -59,7 +59,7 @@ class CVPRConfig(Config):
     NUM_CLASSES = 1 + 7  # Background + CVPR WAD Classes
 
     # Number of training steps per epoch
-    STEPS_PER_EPOCH = 100
+    STEPS_PER_EPOCH = 1000
 
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
@@ -77,13 +77,21 @@ class CVPRDataset(utils.Dataset):
         subset: Subset to load: train or val
         """
         # Add classes. We have only one class to add.
-        self.add_class("cvpr", 33, "car")
-        self.add_class("cvpr", 34, "motorcycle")
-        self.add_class("cvpr", 35, "bicycle")
-        self.add_class("cvpr", 36, "person")
-        self.add_class("cvpr", 38, "truck")
-        self.add_class("cvpr", 39, "bus")
-        self.add_class("cvpr", 40, "tricycle")
+#         self.add_class("cvpr", 33, "car")
+#         self.add_class("cvpr", 34, "motorcycle")
+#         self.add_class("cvpr", 35, "bicycle")
+#         self.add_class("cvpr", 36, "person")
+#         self.add_class("cvpr", 38, "truck")
+#         self.add_class("cvpr", 39, "bus")
+#         self.add_class("cvpr", 40, "tricycle")
+        
+        self.add_class("cvpr", 1, "car")
+        self.add_class("cvpr", 2, "motorcycle")
+        self.add_class("cvpr", 3, "bicycle")
+        self.add_class("cvpr", 4, "person")
+        self.add_class("cvpr", 5, "truck")
+        self.add_class("cvpr", 6, "bus")
+        self.add_class("cvpr", 7, "tricycle")
         # Import Dataset
 
 
@@ -158,9 +166,27 @@ class CVPRDataset(utils.Dataset):
         for idx, c in enumerate(class_ids):
             try:
                 assert c in class_map
+                if c == 33:
+                    class_ids[idx] = 1
+                elif c == 34:
+                    class_ids[idx] = 2
+                elif c == 35:
+                    class_ids[idx] = 3
+                elif c == 36:
+                    class_ids[idx] = 4
+                elif c == 38:
+                    class_ids[idx] = 5
+                elif c == 39:
+                    class_ids[idx] = 6
+                elif c == 40:
+                    class_ids[idx] = 7
+                else:
+                    print('error')
+                    class_ids[idx] = 0
             except:
                 class_ids[idx] = 0
                 print('error')
+        print(class_ids)
         return mask.astype(np.bool), class_ids
 
     def image_reference(self, image_id):

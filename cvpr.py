@@ -42,25 +42,19 @@ DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "logs")
 
 
 class CVPRConfig(Config):
-    """Configuration for training on the toy  dataset.
+    """Configuration for training.
     Derives from the base Config class and overrides some values.
     """
     # Give the configuration a recognizable name
     NAME = "CVPR"
-
     GPU_COUNT = 1
-
-
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
     IMAGES_PER_GPU = 1
-
     # Number of classes (including background)
     NUM_CLASSES = 1 + 7  # Background + CVPR WAD Classes
-
     # Number of training steps per epoch
     STEPS_PER_EPOCH = 1000
-
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
 
